@@ -1,0 +1,114 @@
+---
+// src/components/sections/FeaturedEvents.astro
+import AtraccionCard from "../ui/AtraccionCard.astro";
+
+const atracciones = [
+    {
+        title: "Safari en el reino del T-Rex",
+        date: "3 rutas al día",
+        price: "500€",
+        image: "",
+        badge: "Alta Peligrosidad",
+        stock: 5,
+        href: "/atracciones/t-rex",
+    },
+    {
+        title: "Kayak en el lago del Tylosaurio",
+        date: "Abierto todo el dia",
+        price: "250€",
+        image: "",
+        badge: "Alta Peligrosidad",
+        stock: 50,
+        href: "/atracciones/tylosaurio",
+    },
+    {
+        title: "Salto base en el Aviario",
+        date: "Show: 11:00h / 16:00h",
+        price: "300€",
+        image: "",
+        badge: "Alta Peligrosidad",
+        stock: 300,
+        href: "/atracciones/aviary",
+    },
+];
+---
+
+<section id="atracciones" class="py-32 relative overflow-hidden bg-bg-bone">
+    <div class="container mx-auto px-4 relative z-10">
+        <!-- Cabecera de Sección -->
+        <div class="text-center mb-16 section-header">
+            <h2
+                class="text-5xl md:text-6xl font-black mb-4 text-[#365314] uppercase italic drop-shadow-sm"
+            >
+                Atracciones Principales
+            </h2>
+            <p
+                class="text-stone-600 text-xl max-w-2xl mx-auto font-serif italic"
+            >
+                "No hemos reparado en gastos"
+            </p>
+        </div>
+
+        <!-- Cuadrícula de Eventos -->
+        <div
+            class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 events-grid"
+        >
+            {
+                atracciones.map((atraccion, index) => (
+                    <div class="event-item" data-index={index}>
+                        <AtraccionCard {...atraccion} />
+                    </div>
+                ))
+            }
+        </div>
+    </div>
+</section>
+
+<script>
+    import gsap from "gsap";
+    import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+    gsap.registerPlugin(ScrollTrigger);
+
+    // Animación del header de la sección
+    gsap.from(".section-header", {
+        scrollTrigger: {
+            trigger: ".section-header",
+            start: "top 80%",
+            end: "bottom 60%",
+            toggleActions: "play none none reverse",
+        },
+        y: 50,
+        opacity: 0,
+        duration: 1,
+        ease: "power3.out",
+    });
+
+    // Animación de las tarjetas con stagger
+    gsap.from(".event-item", {
+        scrollTrigger: {
+            trigger: ".events-grid",
+            start: "top 80%",
+            end: "bottom 60%",
+            toggleActions: "play none none reverse",
+        },
+        y: 100,
+        opacity: 0,
+        duration: 0.8,
+        stagger: 0.2,
+        ease: "power3.out",
+    });
+
+    // Animación del botón "Ver más"
+    gsap.from(".view-more", {
+        scrollTrigger: {
+            trigger: ".view-more",
+            start: "top 90%",
+            toggleActions: "play none none reverse",
+        },
+        scale: 0.8,
+        opacity: 0,
+        duration: 0.6,
+        ease: "back.out(1.7)",
+    });
+</script>

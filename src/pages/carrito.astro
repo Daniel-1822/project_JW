@@ -1,0 +1,236 @@
+---
+import Layout from "../layouts/Layout.astro";
+import "../styles/global.css";
+---
+
+<Layout title="Carrito de Compra - DinoPark">
+    <section class="min-h-screen pt-32 pb-20 bg-stone-100">
+        <div class="container mx-auto px-4">
+            <h1
+                class="text-5xl font-display font-black text-green-950 uppercase italic mb-12 text-center drop-shadow-sm"
+            >
+                Tu Reserva Jurásica
+            </h1>
+
+            <div id="cart-loading" class="text-center py-20">
+                <p
+                    class="text-2xl text-stone-500 font-serif italic animate-pulse"
+                >
+                    Buscando registros...
+                </p>
+            </div>
+
+            <div id="cart-empty" class="hidden text-center py-20">
+                <div class="text-6xl mb-6">🦕</div>
+                <h2 class="text-3xl font-bold text-stone-700 mb-4">
+                    Tu carrito está vacío
+                </h2>
+                <p class="text-xl text-stone-500 mb-8 max-w-lg mx-auto">
+                    Parece que no has seleccionado ninguna experiencia ni
+                    recuerdo todavía.
+                </p>
+                <a
+                    href="/tienda"
+                    class="inline-block bg-green-950 text-white px-8 py-4 rounded-xl font-bold hover:bg-accent transition-colors shadow-lg"
+                >
+                    Ir a la Tienda
+                </a>
+            </div>
+
+            <div
+                id="cart-content"
+                class="hidden grid grid-cols-1 lg:grid-cols-3 gap-8"
+            >
+                <!-- Lista de artículos del carrito -->
+                <div class="lg:col-span-2 space-y-6" id="cart-items-container">
+                    <!-- Los artículos se inyectarán aquí -->
+                </div>
+
+                <!-- Resumen del pedido -->
+                <div class="lg:col-span-1">
+                    <div
+                        class="bg-white p-8 rounded-2xl shadow-xl border-2 border-green-950/10 sticky top-32"
+                    >
+                        <h3
+                            class="text-2xl font-black text-green-950 uppercase italic mb-6 border-b-2 border-dashed border-stone-200 pb-4"
+                        >
+                            Resumen
+                        </h3>
+
+                        <div class="space-y-4 mb-8 text-stone-600">
+                            <div class="flex justify-between">
+                                <span>Subtotal</span>
+                                <span id="cart-subtotal" class="font-bold"
+                                    >0 €</span
+                                >
+                            </div>
+                            <div class="flex justify-between">
+                                <span>Impuestos (IVA Dinosáurico)</span>
+                                <span id="cart-tax" class="font-bold">0 €</span>
+                            </div>
+                            <div
+                                class="pt-4 border-t border-stone-200 flex justify-between text-xl font-black text-accent"
+                            >
+                                <span>Total</span>
+                                <span id="cart-total">0 €</span>
+                            </div>
+                        </div>
+
+                        <button
+                            id="checkout-btn"
+                            class="w-full bg-green-950 text-white py-4 rounded-xl font-bold hover:bg-accent transition-colors shadow-lg mb-4 cursor-pointer text-lg"
+                        >
+                            Proceder al Pago
+                        </button>
+
+                        <button
+                            id="clear-cart-btn"
+                            class="w-full text-stone-500 hover:text-red-600 font-semibold transition-colors text-sm underline cursor-pointer"
+                        >
+                            Vaciar Carrito
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</Layout>
+
+<script>
+    import {
+        getCart,
+        removeFromCart,
+        updateQuantity,
+        clearCart,
+    } from "../utils/cartStore";
+
+    // Formatear moneda
+    const formatPrice = (price: number) => {
+        return new Intl.NumberFormat("es-ES", {
+            style: "currency",
+            currency: "EUR",
+        }).format(price);
+    };
+
+    function renderCart() {
+        const cart = getCart();
+        const loadingEl = document.getElementById("cart-loading");
+        const emptyEl = document.getElementById("cart-empty");
+        const contentEl = document.getElementById("cart-content");
+        const itemsContainer = document.getElementById("cart-items-container");
+
+        if (loadingEl) loadingEl.style.display = "none";
+
+        if (cart.length === 0) {
+            if (emptyEl) emptyEl.classList.remove("hidden");
+            if (contentEl) contentEl.classList.add("hidden");
+            return;
+        }
+
+        if (emptyEl) emptyEl.classList.add("hidden");
+        if (contentEl) contentEl.classList.remove("hidden");
+
+        // Renderizar artículos
+        if (itemsContainer) {
+            itemsContainer.innerHTML = cart
+                .map(
+                    (item: any) => `
+                <div class="bg-white p-4 rounded-xl shadow-md border border-stone-100 flex gap-4 items-center animate-fade-in group hover:border-[#d97706]/30 transition-colors">
+                    ${
+                        item.image
+                            ? `<img src="${item.image}" alt="${item.title}" class="w-24 h-24 object-cover rounded-lg bg-stone-200">`
+                            : `<div class="w-24 h-24 bg-[#1a2e05]/10 rounded-lg flex items-center justify-center text-[#1a2e05] text-2xl">🎟️</div>`
+                    }
+                    
+                    <div class="flex-1">
+                        <h4 class="font-bold text-lg text-[#1a2e05] mb-1">${item.title}</h4>
+                        <div class="text-[#d97706] font-bold">${formatPrice(item.price)}</div>
+                    </div>
+
+                    <div class="flex items-center gap-3 bg-stone-50 px-3 py-1 rounded-lg border border-stone-200">
+                        <button class="w-6 h-6 flex items-center justify-center rounded-full hover:bg-stone-200 text-stone-600 font-bold decrease-qty" data-id="${item.id}">-</button>
+                        <span class="font-bold w-4 text-center">${item.quantity}</span>
+                        <button class="w-6 h-6 flex items-center justify-center rounded-full hover:bg-stone-200 text-stone-600 font-bold increase-qty" data-id="${item.id}">+</button>
+                    </div>
+
+                    <div class="text-right min-w-[80px]">
+                        <div class="font-bold text-lg">${formatPrice(item.price * item.quantity)}</div>
+                    </div>
+
+                    <button class="p-2 text-stone-400 hover:text-red-500 transition-colors remove-btn" data-id="${item.id}" aria-label="Eliminar">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                        </svg>
+                    </button>
+                </div>
+            `,
+                )
+                .join("");
+
+            // Adjuntar listeners
+            itemsContainer.querySelectorAll(".decrease-qty").forEach((btn) => {
+                btn.addEventListener("click", (e) => {
+                    const id = (e.currentTarget as HTMLElement).dataset.id;
+                    const item = cart.find((i: any) => i.id === id);
+                    if (item && item.quantity > 1)
+                        updateQuantity(id, item.quantity - 1);
+                    else if (item && item.quantity === 1) removeFromCart(id);
+                });
+            });
+
+            itemsContainer.querySelectorAll(".increase-qty").forEach((btn) => {
+                btn.addEventListener("click", (e) => {
+                    const id = (e.currentTarget as HTMLElement).dataset.id;
+                    const item = cart.find((i: any) => i.id === id);
+                    if (item) updateQuantity(id, item.quantity + 1);
+                });
+            });
+
+            itemsContainer.querySelectorAll(".remove-btn").forEach((btn) => {
+                btn.addEventListener("click", (e) => {
+                    const id = (e.currentTarget as HTMLElement).dataset.id;
+                    removeFromCart(id);
+                });
+            });
+        }
+
+        // Actualizar totales
+        const total = cart.reduce(
+            (acc: number, item: any) => acc + item.price * item.quantity,
+            0,
+        );
+        const tax = total * 0.1; // Ejemplo de 10% de impuestos
+        const finalTotal = total + tax;
+
+        const subtotalEl = document.getElementById("cart-subtotal");
+        const taxEl = document.getElementById("cart-tax");
+        const totalEl = document.getElementById("cart-total");
+
+        if (subtotalEl) subtotalEl.innerText = formatPrice(total);
+        if (taxEl) taxEl.innerText = formatPrice(tax);
+        if (totalEl) totalEl.innerText = formatPrice(finalTotal);
+    }
+
+    // Inicialización
+    renderCart();
+    window.addEventListener("cart-updated", renderCart);
+
+    // Botones de resumen
+    document.getElementById("clear-cart-btn")?.addEventListener("click", () => {
+        if (
+            confirm(
+                "¿Seguro que quieres liberar todos los dinosaurios de tu carrito?",
+            )
+        ) {
+            clearCart();
+        }
+    });
+
+    document.getElementById("checkout-btn")?.addEventListener("click", () => {
+        alert(
+            "¡Gracias por tu compra! Tu aventura jurásica te espera. (Simulación de pago completada)",
+        );
+        clearCart();
+        window.location.href = "/tienda"; // Redirigir a la tienda
+    });
+</script>

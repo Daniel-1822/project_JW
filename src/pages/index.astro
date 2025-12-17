@@ -1,0 +1,76 @@
+---
+// src/pages/index.astro
+import Layout from "../layouts/Layout.astro";
+import Hero from "../components/sections/Hero.astro";
+import ListaAtracciones from "../components/sections/ListaAtracciones.astro";
+import TiposEntradas from "../components/sections/TiposEntradas.astro";
+import "../styles/global.css";
+---
+
+<Layout title="AstroTickets - Eventos Inolvidables" removeTopPadding={true}>
+	<!-- Hero Section con animaciones GSAP -->
+	<Hero />
+
+	<!-- Featured Events Section -->
+	<ListaAtracciones />
+
+	<!-- Tickets Section -->
+	<TiposEntradas />
+</Layout>
+
+<script>
+	import gsap from "gsap";
+	import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+	gsap.registerPlugin(ScrollTrigger);
+
+	// Animación de los stats (contadores)
+	const counters = document.querySelectorAll(".counter");
+
+	counters.forEach((counter) => {
+		const target = parseInt(counter.getAttribute("data-target") || "0");
+
+		gsap.to(counter, {
+			scrollTrigger: {
+				trigger: ".stats-grid",
+				start: "top 80%",
+				toggleActions: "play none none reverse",
+			},
+			innerHTML: target,
+			duration: 2,
+			ease: "power1.out",
+			snap: { innerHTML: 1 },
+			onUpdate: function () {
+				const value = Math.ceil(this.targets()[0].innerHTML);
+				counter.innerHTML = value.toLocaleString();
+			},
+		});
+	});
+
+	// Animación de los stat items
+	gsap.from(".stat-item", {
+		scrollTrigger: {
+			trigger: ".stats-grid",
+			start: "top 80%",
+			toggleActions: "play none none reverse",
+		},
+		scale: 0.5,
+		opacity: 0,
+		duration: 0.8,
+		stagger: 0.15,
+		ease: "back.out(1.7)",
+	});
+
+	// Animación del CTA final
+	gsap.from(".cta-section", {
+		scrollTrigger: {
+			trigger: ".cta-section",
+			start: "top 80%",
+			toggleActions: "play none none reverse",
+		},
+		y: 100,
+		opacity: 0,
+		duration: 1,
+		ease: "power3.out",
+	});
+</script>

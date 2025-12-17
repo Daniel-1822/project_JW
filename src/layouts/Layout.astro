@@ -1,0 +1,215 @@
+---
+// src/layouts/Layout.astro
+interface Props {
+	title: string;
+	description?: string;
+	removeTopPadding?: boolean;
+}
+
+const {
+	title,
+	description = "Plataforma de venta de entradas para eventos",
+	removeTopPadding = false,
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="es">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="description" content={description} />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="generator" content={Astro.generator} />
+		<title>{title}</title>
+	</head>
+	<body>
+		<!-- Encabezado/Barra de Navegación -->
+		<header
+			class="fixed top-0 w-full z-50 bg-green-700 backdrop-blur-md border-b-4 border-amber-600 shadow-lg"
+		>
+			<nav class="container mx-auto px-4 py-4">
+				<div class="flex items-center justify-between">
+					<a
+						href="/"
+						class="text-3xl font-black tracking-widest text-white uppercase italic"
+						style="font-family: 'Impact', sans-serif; text-shadow: 2px 2px 0 #d97706;"
+					>
+						DinoPark
+					</a>
+
+					<ul
+						class="hidden md:flex items-center gap-8 text-white/90 font-bold tracking-wide uppercase text-sm"
+					>
+						<li>
+							<a
+								href="/atracciones"
+								class="hover:text-amber-500 transition-colors"
+								>Atracciones</a
+							>
+						</li>
+						<li>
+							<a
+								href="/tienda"
+								class="hover:text-amber-500 transition-colors"
+								>Tienda</a
+							>
+						</li>
+						<li>
+							<a
+								href="/dashboard"
+								class="hover:text-amber-500 transition-colors"
+								>Dashboard</a
+							>
+						</li>
+						<li>
+							<a
+								href="/comunidad"
+								class="hover:text-amber-500 transition-colors"
+								>Comunidad</a
+							>
+						</li>
+						<li>
+							<a
+								href="/mapa"
+								class="hover:text-amber-500 transition-colors"
+								>Mapa</a
+							>
+						</li>
+						<li>
+							<a
+								href="/contacto"
+								class="hover:text-amber-500 transition-colors"
+								>Contacto</a
+							>
+						</li>
+						<!-- Icono del Carrito -->
+						<li>
+							<a
+								href="/carrito"
+								class="relative group hover:text-amber-500 transition-colors flex items-center"
+								aria-label="Carrito"
+							>
+								<svg
+									xmlns="http://www.w3.org/2000/svg"
+									class="w-6 h-6"
+									fill="none"
+									viewBox="0 0 24 24"
+									stroke="currentColor"
+								>
+									<path
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										stroke-width="2"
+										d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
+									></path>
+								</svg>
+								<span
+									id="cart-count"
+									class="absolute -top-2 -right-3 bg-amber-600 text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center hidden"
+									>0</span
+								>
+							</a>
+						</li>
+					</ul>
+				</div>
+			</nav>
+		</header>
+
+		<script>
+			import { getCart } from "../utils/cartStore";
+
+			function updateCount() {
+				const cart = getCart();
+				const count = cart.reduce(
+					(acc: number, item: any) => acc + item.quantity,
+					0,
+				);
+				const badge = document.getElementById("cart-count");
+				if (badge) {
+					badge.innerText = count.toString();
+					if (count > 0) badge.classList.remove("hidden");
+					else badge.classList.add("hidden");
+				}
+			}
+
+			// Ejecutar al cargar
+			updateCount();
+
+			// Escuchar actualizaciones
+			window.addEventListener("cart-updated", updateCount);
+
+			// Soporte para transiciones de vista de Astro (si está habilitado, pero es buena práctica tenerlo)
+			document.addEventListener("astro:page-load", updateCount);
+		</script>
+
+		<!-- Contenido Principal -->
+		<main class={removeTopPadding ? "" : "pt-32 pb-12"}>
+			<slot />
+		</main>
+
+		<!-- Pie de página -->
+		<footer
+			class="bg-green-700 text-white border-t-8 border-amber-600 mt-20"
+		>
+			<div class="container mx-auto px-4 py-12">
+				<div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+					<div>
+						<h3
+							class="text-2xl font-black italic tracking-wider text-amber-500 mb-4"
+							style="font-family: 'Impact', sans-serif;"
+						>
+							DINOPARK
+						</h3>
+						<p class="text-stone-300">
+							Donde la prehistoria cobra vida. Una aventura de 65
+							millones de años en fabricación.
+						</p>
+					</div>
+
+					<div>
+						<h4
+							class="font-bold text-amber-500 uppercase tracking-wider mb-4"
+						>
+							Síguenos
+						</h4>
+						<div class="flex gap-4">
+							<a
+								href="#"
+								class="w-10 h-10 bg-white/10 rounded-sm flex items-center justify-center hover:bg-amber-600 transition-colors text-white"
+								>𝕏</a
+							>
+							<a
+								href="#"
+								class="w-10 h-10 bg-white/10 rounded-sm flex items-center justify-center hover:bg-amber-600 transition-colors text-white"
+								>IG</a
+							>
+							<a
+								href="#"
+								class="w-10 h-10 bg-white/10 rounded-sm flex items-center justify-center hover:bg-amber-600 transition-colors text-white"
+								>FB</a
+							>
+						</div>
+					</div>
+				</div>
+				<div
+					class="border-t border-white/10 mt-8 pt-8 text-center text-white-500 text-sm"
+				>
+					<p>&copy; 2024 DinoPark. Life finds a way.</p>
+				</div>
+			</div>
+		</footer>
+	</body>
+</html>
+
+<style is:global>
+	@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&display=swap");
+
+	body {
+		font-family: "Ubuntu", sans-serif;
+	}
+
+	html {
+		scroll-behavior: smooth;
+	}
+</style>

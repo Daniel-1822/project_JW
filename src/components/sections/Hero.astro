@@ -1,0 +1,199 @@
+---
+// src/components/sections/Hero.astro
+---
+
+<section
+    class="relative min-h-screen flex items-center justify-center overflow-hidden"
+>
+    <!-- Imagen de fondo -->
+    <div class="absolute inset-0 z-0">
+        <div class="absolute inset-0 bg-black/40 z-10"></div>
+        <!-- Color de reserva si falla la imagen -->
+        <div class="absolute inset-0 bg-[#1a2e05]"></div>
+        <!-- Podríamos usar una imagen real aquí si está disponible, por ahora usamos un gradiente/color de jungla oscura -->
+        <img
+            src="https://images.unsplash.com/photo-1543946658-b6158ced6e87?q=80&w=2070&auto=format&fit=crop"
+            class="w-full h-full object-cover opacity-80"
+            alt="Jungle Background"
+        />
+    </div>
+
+    <!-- Contenido -->
+    <div class="container mx-auto px-4 z-20 text-center">
+        <!-- Pretítulo -->
+        <div class="overflow-hidden mb-4">
+            <p
+                id="hero-pretitle"
+                class="text-amber-500 text-xl font-bold tracking-[0.3em] uppercase drop-shadow-md"
+            >
+                Bienvenidos al Parque
+            </p>
+        </div>
+
+        <!-- Título Principal -->
+        <div class="overflow-hidden mb-6">
+            <h1
+                id="hero-title"
+                class="text-6xl md:text-8xl lg:text-9xl font-black italic uppercase leading-none text-white drop-shadow-xl"
+                style="-webkit-text-stroke: 2px #365314;"
+            >
+                <div class="inline-block">DINOPARK</div>
+            </h1>
+        </div>
+
+        <!-- Subtítulo -->
+        <div class="overflow-hidden mb-12">
+            <p
+                id="hero-subtitle"
+                class="text-stone-200 text-xl md:text-2xl max-w-3xl mx-auto font-medium shadow-black/50 drop-shadow-md"
+            >
+                La aventura más peligrosa y emocionante de tu vida. <br />
+                Observa dinosaurios reales en su hábitat natural.
+            </p>
+        </div>
+
+        <!-- Cuadrícula de Información -->
+        <div class="overflow-hidden mb-12">
+            <div
+                id="hero-info"
+                class="flex flex-wrap justify-center gap-6 text-white/90 font-bold uppercase tracking-wide text-sm"
+            >
+                <div
+                    class="flex items-center gap-2 bg-black/30 px-4 py-2 rounded border border-white/20 backdrop-blur-sm"
+                >
+                    <span>🦖 50+ Especies</span>
+                </div>
+                <div
+                    class="flex items-center gap-2 bg-black/30 px-4 py-2 rounded border border-white/20 backdrop-blur-sm"
+                >
+                    <span>🚙 Safari Tours</span>
+                </div>
+                <div
+                    class="flex items-center gap-2 bg-black/30 px-4 py-2 rounded border border-white/20 backdrop-blur-sm"
+                >
+                    <span>🏕️ Campamento Cretácico</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Botones de Acción (CTAs) -->
+        <div class="overflow-hidden">
+            <div
+                id="hero-ctas"
+                class="flex flex-col sm:flex-row items-center justify-center gap-6"
+            >
+                <a href="#tickets" class="btn-secondary"> Comprar Pases </a>
+
+                <a href="#attractions" class="btn-primary"> Ver Atracciones </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    import gsap from "gsap";
+    import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+    gsap.registerPlugin(ScrollTrigger);
+
+    // Crear estrellas de fondo
+    const starsContainer = document.getElementById("stars");
+    if (starsContainer) {
+        for (let i = 0; i < 100; i++) {
+            const star = document.createElement("div");
+            star.className = "absolute w-1 h-1 bg-white rounded-full";
+            star.style.left = `${Math.random() * 100}%`;
+            star.style.top = `${Math.random() * 100}%`;
+            star.style.opacity = `${Math.random() * 0.5 + 0.2}`;
+            starsContainer.appendChild(star);
+        }
+    }
+
+    // Animación inicial del hero (fade in)
+    const timeline = gsap.timeline({ defaults: { ease: "power3.out" } });
+
+    timeline
+        .from("#hero-pretitle", {
+            y: 50,
+            opacity: 0,
+            duration: 1,
+            delay: 0.3,
+        })
+        .from(
+            "#hero-title span",
+            {
+                y: 100,
+                opacity: 0,
+                duration: 1.2,
+                stagger: 0.2,
+            },
+            "-=0.5",
+        )
+        .from(
+            "#hero-subtitle",
+            {
+                y: 30,
+                opacity: 0,
+                duration: 0.8,
+            },
+            "-=0.6",
+        )
+        .from(
+            "#hero-info",
+            {
+                y: 30,
+                opacity: 0,
+                duration: 0.8,
+            },
+            "-=0.6",
+        )
+        .from(
+            "#hero-ctas",
+            {
+                y: 30,
+                opacity: 0,
+                duration: 0.8,
+            },
+            "-=0.6",
+        );
+
+    // Animación de parallax en las estrellas
+    gsap.to("#stars", {
+        y: 300,
+        scrollTrigger: {
+            trigger: "section",
+            start: "top top",
+            end: "bottom top",
+            scrub: true,
+        },
+    });
+
+    // Animación del título principal con scroll
+    gsap.to("#hero-title", {
+        scale: 0.8,
+        opacity: 0,
+        y: -100,
+        scrollTrigger: {
+            trigger: "section",
+            start: "top top",
+            end: "bottom top",
+            scrub: true,
+        },
+    });
+</script>
+
+<style>
+    @keyframes pulse-glow {
+        0%,
+        100% {
+            box-shadow: 0 0 20px rgba(168, 85, 247, 0.4);
+        }
+        50% {
+            box-shadow: 0 0 40px rgba(236, 72, 153, 0.6);
+        }
+    }
+
+    section {
+        animation: pulse-glow 3s ease-in-out infinite;
+    }
+</style>

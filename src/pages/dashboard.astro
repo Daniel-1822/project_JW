@@ -1,0 +1,593 @@
+---
+import Layout from "../layouts/Layout.astro";
+import "../styles/global.css";
+---
+
+<Layout title="Dashboard - Admin Panel">
+    <!-- Wrapper principal con fondo ligeramente distinto si se desea, aquí usamos el default del body -->
+    <div class="container mx-auto px-4 py-8">
+        <!-- Header del Dashboard -->
+        <div
+            class="mb-8 flex flex-col md:flex-row justify-between items-start md:items-center gap-4"
+        >
+            <div>
+                <h1
+                    class="text-4xl font-display font-black text-green-950 uppercase italic tracking-wider mb-2"
+                >
+                    Panel de Control
+                </h1>
+                <p class="text-stone-600 font-medium">
+                    Vista general de operaciones del parque
+                </p>
+            </div>
+            <div
+                class="bg-amber-100 text-amber-800 px-4 py-2 rounded-full font-bold text-sm border border-amber-200 shadow-sm flex items-center gap-2"
+            >
+                <span class="relative flex h-3 w-3">
+                    <span
+                        class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"
+                    ></span>
+                    <span
+                        class="relative inline-flex rounded-full h-3 w-3 bg-green-500"
+                    ></span>
+                </span>
+                Estado del Sistema: NORMAL
+            </div>
+        </div>
+
+        <!-- Tarjetas de Métricas -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+            <!-- Tarjeta 1: Entradas -->
+            <div
+                class="bg-white p-6 rounded-xl shadow-lg border-l-4 border-amber-500 hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 group"
+            >
+                <div class="flex justify-between items-start mb-4">
+                    <div>
+                        <p
+                            class="text-stone-500 text-xs font-bold uppercase tracking-wider"
+                        >
+                            Entradas Vendidas Hoy
+                        </p>
+                        <h3
+                            class="text-4xl font-black text-green-950 mt-2 group-hover:text-amber-600 transition-colors"
+                        >
+                            2,543
+                        </h3>
+                    </div>
+                    <div
+                        class="bg-amber-50 p-3 rounded-lg text-amber-600 group-hover:bg-amber-100 transition-colors"
+                    >
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            class="h-8 w-8"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z"
+                            ></path>
+                        </svg>
+                    </div>
+                </div>
+                <div
+                    class="flex items-center text-sm border-t border-stone-100 pt-4 mt-2"
+                >
+                    <span
+                        class="text-green-600 font-bold flex items-center bg-green-50 px-2 py-0.5 rounded-md mr-2"
+                    >
+                        <svg
+                            class="w-3 h-3 mr-1"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                            ><path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg
+                        >
+                        +12.5%
+                    </span>
+                    <span class="text-stone-400">vs. ayer</span>
+                </div>
+            </div>
+
+            <!-- Tarjeta 2: Visitantes -->
+            <div
+                class="bg-white p-6 rounded-xl shadow-lg border-l-4 border-emerald-600 hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 group"
+            >
+                <div class="flex justify-between items-start mb-4">
+                    <div>
+                        <p
+                            class="text-stone-500 text-xs font-bold uppercase tracking-wider"
+                        >
+                            Visitantes en el Parque
+                        </p>
+                        <h3
+                            class="text-4xl font-black text-green-950 mt-2 group-hover:text-emerald-600 transition-colors"
+                        >
+                            1,208
+                        </h3>
+                    </div>
+                    <div
+                        class="bg-emerald-50 p-3 rounded-lg text-emerald-600 group-hover:bg-emerald-100 transition-colors"
+                    >
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            class="h-8 w-8"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0z"
+                            ></path>
+                        </svg>
+                    </div>
+                </div>
+                <div
+                    class="flex items-center text-sm border-t border-stone-100 pt-4 mt-2"
+                >
+                    <span
+                        class="text-green-600 font-bold flex items-center bg-green-50 px-2 py-0.5 rounded-md mr-2"
+                    >
+                        <svg
+                            class="w-3 h-3 mr-1"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                            ><path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg
+                        >
+                        +4.3%
+                    </span>
+                    <span class="text-stone-400">capacidad actual 45%</span>
+                </div>
+            </div>
+
+            <!-- Tarjeta 3: Incidentes -->
+            <div
+                class="bg-white p-6 rounded-xl shadow-lg border-l-4 border-blue-500 hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 group"
+            >
+                <div class="flex justify-between items-start mb-4">
+                    <div>
+                        <p
+                            class="text-stone-500 text-xs font-bold uppercase tracking-wider"
+                        >
+                            Incidentes Reportados
+                        </p>
+                        <h3
+                            class="text-4xl font-black text-green-950 mt-2 group-hover:text-blue-600 transition-colors"
+                        >
+                            0
+                        </h3>
+                    </div>
+                    <div
+                        class="bg-blue-50 p-3 rounded-lg text-blue-600 group-hover:bg-blue-100 transition-colors"
+                    >
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            class="h-8 w-8"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+                            ></path>
+                        </svg>
+                    </div>
+                </div>
+                <div
+                    class="flex items-center text-sm border-t border-stone-100 pt-4 mt-2"
+                >
+                    <span
+                        class="text-stone-500 font-bold flex items-center bg-stone-100 px-2 py-0.5 rounded-md mr-2"
+                    >
+                        -100%
+                    </span>
+                    <span class="text-stone-400">últimas 24h</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <!-- Gráfico Simulado -->
+            <div
+                class="bg-white p-8 rounded-xl shadow-lg border border-stone-200"
+            >
+                <div class="flex justify-between items-end mb-8">
+                    <h3
+                        class="text-xl font-bold text-green-950 flex items-center"
+                    >
+                        <span
+                            class="w-3 h-8 bg-amber-500 mr-4 rounded-full shadow-sm"
+                        ></span>
+                        Afluencia Semanal
+                    </h3>
+                    <div class="flex gap-2 text-xs font-bold">
+                        <span class="flex items-center text-stone-500"
+                            ><span
+                                class="w-2 h-2 rounded-full bg-amber-500 mr-1"
+                            ></span>Esta semana</span
+                        >
+                        <span class="flex items-center text-stone-300"
+                            ><span
+                                class="w-2 h-2 rounded-full bg-stone-200 mr-1"
+                            ></span>Semana Anterior</span
+                        >
+                    </div>
+                </div>
+
+                <div
+                    class="relative h-64 flex items-end justify-between gap-4 px-2 pb-6"
+                >
+                    <!-- Líneas de fondo -->
+                    <div
+                        class="absolute inset-0 flex flex-col justify-between pointer-events-none pb-6"
+                    >
+                        <div
+                            class="w-full h-px bg-stone-50 border-t border-dashed border-stone-200"
+                        >
+                        </div>
+                        <div
+                            class="w-full h-px bg-stone-50 border-t border-dashed border-stone-200"
+                        >
+                        </div>
+                        <div
+                            class="w-full h-px bg-stone-50 border-t border-dashed border-stone-200"
+                        >
+                        </div>
+                        <div
+                            class="w-full h-px bg-stone-50 border-t border-dashed border-stone-200"
+                        >
+                        </div>
+                        <div
+                            class="w-full h-px bg-stone-50 border-t border-dashed border-stone-200"
+                        >
+                        </div>
+                    </div>
+
+                    <!-- Barras del gráfico -->
+                    <!-- Lunes -->
+                    <div
+                        class="relative w-full flex flex-col justify-end group cursor-pointer h-full"
+                    >
+                        <div
+                            class="absolute bottom-0 w-full bg-stone-100 rounded-t-sm h-[30%] group-hover:bg-stone-200 transition-all"
+                        >
+                        </div>
+                        <div
+                            class="absolute bottom-0 w-full bg-amber-200 rounded-t-sm h-[40%] scale-x-75 group-hover:scale-x-90 group-hover:bg-amber-300 transition-all shadow-sm"
+                        >
+                            <div
+                                class="opacity-0 group-hover:opacity-100 absolute -top-10 left-1/2 -translate-x-1/2 bg-green-950 text-white text-xs py-1 px-2 rounded shadow-lg transition-opacity whitespace-nowrap z-10"
+                            >
+                                1,200 visitas<div
+                                    class="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-green-950"
+                                >
+                                </div>
+                            </div>
+                        </div>
+                        <div
+                            class="absolute -bottom-8 left-1/2 -translate-x-1/2 text-xs text-stone-400 font-bold uppercase"
+                        >
+                            Lun
+                        </div>
+                    </div>
+
+                    <!-- Martes -->
+                    <div
+                        class="relative w-full flex flex-col justify-end group cursor-pointer h-full"
+                    >
+                        <div
+                            class="absolute bottom-0 w-full bg-stone-100 rounded-t-sm h-[40%] group-hover:bg-stone-200 transition-all"
+                        >
+                        </div>
+                        <div
+                            class="absolute bottom-0 w-full bg-amber-300 rounded-t-sm h-[55%] scale-x-75 group-hover:scale-x-90 group-hover:bg-amber-400 transition-all shadow-sm"
+                        >
+                            <div
+                                class="opacity-0 group-hover:opacity-100 absolute -top-10 left-1/2 -translate-x-1/2 bg-green-950 text-white text-xs py-1 px-2 rounded shadow-lg transition-opacity whitespace-nowrap z-10"
+                            >
+                                1,650 visitas<div
+                                    class="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-green-950"
+                                >
+                                </div>
+                            </div>
+                        </div>
+                        <div
+                            class="absolute -bottom-8 left-1/2 -translate-x-1/2 text-xs text-stone-400 font-bold uppercase"
+                        >
+                            Mar
+                        </div>
+                    </div>
+
+                    <!-- Miercoles -->
+                    <div
+                        class="relative w-full flex flex-col justify-end group cursor-pointer h-full"
+                    >
+                        <div
+                            class="absolute bottom-0 w-full bg-stone-100 rounded-t-sm h-[45%] group-hover:bg-stone-200 transition-all"
+                        >
+                        </div>
+                        <div
+                            class="absolute bottom-0 w-full bg-amber-300 rounded-t-sm h-[48%] scale-x-75 group-hover:scale-x-90 group-hover:bg-amber-400 transition-all shadow-sm"
+                        >
+                            <div
+                                class="opacity-0 group-hover:opacity-100 absolute -top-10 left-1/2 -translate-x-1/2 bg-green-950 text-white text-xs py-1 px-2 rounded shadow-lg transition-opacity whitespace-nowrap z-10"
+                            >
+                                1,350 visitas<div
+                                    class="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-green-950"
+                                >
+                                </div>
+                            </div>
+                        </div>
+                        <div
+                            class="absolute -bottom-8 left-1/2 -translate-x-1/2 text-xs text-stone-400 font-bold uppercase"
+                        >
+                            Mié
+                        </div>
+                    </div>
+
+                    <!-- Jueves -->
+                    <div
+                        class="relative w-full flex flex-col justify-end group cursor-pointer h-full"
+                    >
+                        <div
+                            class="absolute bottom-0 w-full bg-stone-100 rounded-t-sm h-[50%] group-hover:bg-stone-200 transition-all"
+                        >
+                        </div>
+                        <div
+                            class="absolute bottom-0 w-full bg-amber-400 rounded-t-sm h-[65%] scale-x-75 group-hover:scale-x-90 group-hover:bg-amber-500 transition-all shadow-sm"
+                        >
+                            <div
+                                class="opacity-0 group-hover:opacity-100 absolute -top-10 left-1/2 -translate-x-1/2 bg-green-950 text-white text-xs py-1 px-2 rounded shadow-lg transition-opacity whitespace-nowrap z-10"
+                            >
+                                1,800 visitas<div
+                                    class="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-green-950"
+                                >
+                                </div>
+                            </div>
+                        </div>
+                        <div
+                            class="absolute -bottom-8 left-1/2 -translate-x-1/2 text-xs text-stone-400 font-bold uppercase"
+                        >
+                            Jue
+                        </div>
+                    </div>
+
+                    <!-- Viernes -->
+                    <div
+                        class="relative w-full flex flex-col justify-end group cursor-pointer h-full"
+                    >
+                        <div
+                            class="absolute bottom-0 w-full bg-stone-100 rounded-t-sm h-[70%] group-hover:bg-stone-200 transition-all"
+                        >
+                        </div>
+                        <div
+                            class="absolute bottom-0 w-full bg-amber-500 rounded-t-sm h-[85%] scale-x-75 group-hover:scale-x-90 group-hover:bg-amber-600 transition-all shadow-md ring-4 ring-amber-100 ring-opacity-50"
+                        >
+                            <div
+                                class="opacity-0 group-hover:opacity-100 absolute -top-10 left-1/2 -translate-x-1/2 bg-green-950 text-white text-xs py-1 px-2 rounded shadow-lg transition-opacity whitespace-nowrap z-10"
+                            >
+                                2,543 visitas<div
+                                    class="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-green-950"
+                                >
+                                </div>
+                            </div>
+                        </div>
+                        <div
+                            class="absolute -bottom-8 left-1/2 -translate-x-1/2 text-xs text-green-950 font-black uppercase"
+                        >
+                            Vie
+                        </div>
+                    </div>
+
+                    <!-- Sabado -->
+                    <div
+                        class="relative w-full flex flex-col justify-end group cursor-pointer h-full"
+                    >
+                        <div
+                            class="absolute bottom-0 w-full bg-stone-100 rounded-t-sm h-[90%] group-hover:bg-stone-200 transition-all"
+                        >
+                        </div>
+                        <div
+                            class="absolute bottom-0 w-full bg-amber-200 rounded-t-sm h-[75%] scale-x-75 group-hover:scale-x-90 group-hover:bg-amber-300 transition-all shadow-sm"
+                        >
+                            <div
+                                class="opacity-0 group-hover:opacity-100 absolute -top-10 left-1/2 -translate-x-1/2 bg-green-950 text-white text-xs py-1 px-2 rounded shadow-lg transition-opacity whitespace-nowrap z-10"
+                            >
+                                2,250 visitas<div
+                                    class="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-green-950"
+                                >
+                                </div>
+                            </div>
+                        </div>
+                        <div
+                            class="absolute -bottom-8 left-1/2 -translate-x-1/2 text-xs text-stone-400 font-bold uppercase"
+                        >
+                            Sáb
+                        </div>
+                    </div>
+
+                    <!-- Domingo -->
+                    <div
+                        class="relative w-full flex flex-col justify-end group cursor-pointer h-full"
+                    >
+                        <div
+                            class="absolute bottom-0 w-full bg-stone-100 rounded-t-sm h-[80%] group-hover:bg-stone-200 transition-all"
+                        >
+                        </div>
+                        <div
+                            class="absolute bottom-0 w-full bg-amber-200 rounded-t-sm h-[65%] scale-x-75 group-hover:scale-x-90 group-hover:bg-amber-300 transition-all shadow-sm"
+                        >
+                            <div
+                                class="opacity-0 group-hover:opacity-100 absolute -top-10 left-1/2 -translate-x-1/2 bg-green-950 text-white text-xs py-1 px-2 rounded shadow-lg transition-opacity whitespace-nowrap z-10"
+                            >
+                                1,950 visitas<div
+                                    class="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-green-950"
+                                >
+                                </div>
+                            </div>
+                        </div>
+                        <div
+                            class="absolute -bottom-8 left-1/2 -translate-x-1/2 text-xs text-stone-400 font-bold uppercase"
+                        >
+                            Dom
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tabla de Actividad Reciente -->
+            <div
+                class="bg-white p-8 rounded-xl shadow-lg border border-stone-200"
+            >
+                <h3
+                    class="text-xl font-bold text-green-950 mb-6 flex items-center"
+                >
+                    <span
+                        class="w-3 h-8 bg-emerald-600 mr-4 rounded-full shadow-sm"
+                    ></span>
+                    Actividad Reciente
+                </h3>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr>
+                                <th
+                                    class="pb-4 text-xs font-bold text-stone-400 uppercase tracking-wider border-b border-stone-100"
+                                    >Evento</th
+                                >
+                                <th
+                                    class="pb-4 text-xs font-bold text-stone-400 uppercase tracking-wider border-b border-stone-100"
+                                    >Ubicación</th
+                                >
+                                <th
+                                    class="pb-4 text-xs font-bold text-stone-400 uppercase tracking-wider border-b border-stone-100 text-right"
+                                    >Hora</th
+                                >
+                            </tr>
+                        </thead>
+                        <tbody class="text-sm">
+                            <tr
+                                class="group hover:bg-stone-50 transition-colors"
+                            >
+                                <td
+                                    class="py-5 border-b border-stone-50 flex items-center"
+                                >
+                                    <span
+                                        class="w-2.5 h-2.5 rounded-full bg-green-500 mr-3 animate-pulse shadow-sm shadow-green-300"
+                                    ></span>
+                                    <span
+                                        class="font-bold text-stone-700 group-hover:text-green-700 transition-colors"
+                                        >Acceso Puerta Norte</span
+                                    >
+                                </td>
+                                <td
+                                    class="py-5 border-b border-stone-50 text-stone-500"
+                                    >Entrada Principal</td
+                                >
+                                <td
+                                    class="py-5 border-b border-stone-50 text-stone-400 text-right font-mono font-medium"
+                                    >10:42 AM</td
+                                >
+                            </tr>
+                            <tr
+                                class="group hover:bg-stone-50 transition-colors"
+                            >
+                                <td
+                                    class="py-5 border-b border-stone-50 flex items-center"
+                                >
+                                    <span
+                                        class="w-2.5 h-2.5 rounded-full bg-blue-500 mr-3"
+                                    ></span>
+                                    <span
+                                        class="font-bold text-stone-700 group-hover:text-blue-700 transition-colors"
+                                        >Venta Ticket VIP</span
+                                    >
+                                </td>
+                                <td
+                                    class="py-5 border-b border-stone-50 text-stone-500"
+                                    >Taquilla Online</td
+                                >
+                                <td
+                                    class="py-5 border-b border-stone-50 text-stone-400 text-right font-mono font-medium"
+                                    >10:38 AM</td
+                                >
+                            </tr>
+                            <tr
+                                class="group hover:bg-stone-50 transition-colors"
+                            >
+                                <td
+                                    class="py-5 border-b border-stone-50 flex items-center"
+                                >
+                                    <span
+                                        class="w-2.5 h-2.5 rounded-full bg-amber-500 mr-3"
+                                    ></span>
+                                    <span
+                                        class="font-bold text-stone-700 group-hover:text-amber-700 transition-colors"
+                                        >Alerta: Comida Baja</span
+                                    >
+                                </td>
+                                <td
+                                    class="py-5 border-b border-stone-50 text-stone-500"
+                                    >Recinto T-Rex</td
+                                >
+                                <td
+                                    class="py-5 border-b border-stone-50 text-stone-400 text-right font-mono font-medium"
+                                    >10:15 AM</td
+                                >
+                            </tr>
+                            <tr
+                                class="group hover:bg-stone-50 transition-colors"
+                            >
+                                <td
+                                    class="py-5 border-b border-stone-50 flex items-center"
+                                >
+                                    <span
+                                        class="w-2.5 h-2.5 rounded-full bg-green-500 mr-3"
+                                    ></span>
+                                    <span
+                                        class="font-bold text-stone-700 group-hover:text-green-700 transition-colors"
+                                        >Mantenimiento OK</span
+                                    >
+                                </td>
+                                <td
+                                    class="py-5 border-b border-stone-50 text-stone-500"
+                                    >Giroesferas</td
+                                >
+                                <td
+                                    class="py-5 border-b border-stone-50 text-stone-400 text-right font-mono font-medium"
+                                    >09:55 AM</td
+                                >
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="mt-8 text-center">
+                    <button
+                        class="px-6 py-2 bg-stone-50 text-stone-600 font-bold text-sm rounded-full hover:bg-amber-100 hover:text-amber-700 transition-all border border-stone-200"
+                    >
+                        Ver reporte completo
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</Layout>

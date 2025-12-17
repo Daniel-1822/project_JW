@@ -1,0 +1,78 @@
+/* src/styles/global.css */
+
+@import "tailwindcss";
+
+@theme {
+    --color-primary: #15803d;
+    /* Green 700 - Jungle Green */
+    --color-primary-light: #16a34a;
+    /* Green 600 */
+    --color-accent: #d97706;
+    /* Amber 600 - Warning/Amber */
+    --color-bg-bone: #fcfbf7;
+    /* Off-white/Bone background */
+    --font-display: 'Ubuntu', sans-serif;
+    /* Strong font for dino theme headers */
+}
+
+@layer base {
+    body {
+        @apply bg-bg-bone text-slate-800 antialiased leading-relaxed;
+        background-image: radial-gradient(#d4d4d8 1px, transparent 1px);
+        background-size: 40px 40px;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        font-family: 'Ubuntu', sans-serif;
+        letter-spacing: 0.02em;
+        text-transform: uppercase;
+        @apply mb-4;
+    }
+
+    html {
+        scroll-behavior: smooth;
+    }
+
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+        width: 12px;
+    }
+
+    ::-webkit-scrollbar-track {
+        @apply bg-stone-200;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        @apply bg-primary rounded-none border-2 border-stone-200;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+        @apply bg-primary-light;
+    }
+}
+
+@layer components {
+
+    /* Buttons */
+    .btn-primary {
+        @apply px-8 py-3 bg-primary text-white font-bold tracking-wider uppercase rounded-sm hover:bg-primary-light hover:-translate-y-1 transition-all shadow-lg shadow-green-900/30 border-b-4 border-green-950;
+    }
+
+    .btn-secondary {
+        @apply px-8 py-3 bg-accent text-white font-bold tracking-wider uppercase rounded-sm hover:bg-amber-500 hover:-translate-y-1 transition-all shadow-lg shadow-amber-900/20 border-b-4 border-amber-800;
+    }
+
+    /* Cards */
+    .dino-card {
+        @apply bg-white border-2 border-primary/20 shadow-xl transition-all duration-300;
+    }
+}
+
+@layer utilities {
+    /* Utilities */
+}

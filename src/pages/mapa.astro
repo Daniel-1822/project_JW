@@ -1,0 +1,164 @@
+---
+import Layout from "../layouts/Layout.astro";
+import "../styles/global.css";
+
+const attractions = [
+    {
+        name: "Safari en el reino del T-Rex",
+        lat: 41.65606,
+        lng: -0.87784,
+        description: "Ruta de alta peligrosidad",
+        type: "safari",
+    },
+    {
+        name: "Kayak en el lago del Tylosaurio",
+        lat: 41.64294,
+        lng: -0.88835,
+        description: "Navega entre depredadores",
+        type: "water",
+    },
+    {
+        name: "Salto base en el Aviario",
+        lat: 41.65022,
+        lng: -0.90097,
+        description: "Adrenalina pura",
+        type: "air",
+    },
+];
+---
+
+<Layout title="Mapa del Parque - DinoPark">
+    <!-- Leaflet CSS -->
+    <link
+        rel="stylesheet"
+        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+        crossorigin=""
+    />
+
+    <section class="relative min-h-screen bg-bg-bone pt-10 pb-20">
+        <!-- Header -->
+        <div class="container mx-auto px-4 mb-10 text-center z-10 relative">
+            <h1
+                class="text-4xl md:text-6xl font-black text-[#365314] italic uppercase drop-shadow-sm mb-4"
+                style="font-family: 'Impact', sans-serif;"
+            >
+                Mapa del Territorio
+            </h1>
+            <p
+                class="text-xl text-stone-600 font-serif italic max-w-2xl mx-auto"
+            >
+                "Navega con precaución: Estás en la cima de la cadena
+                alimenticia... o tal vez no."
+            </p>
+        </div>
+
+        <!-- Map Container -->
+        <div class="container mx-auto px-4">
+            <div
+                class="relative w-full h-[600px] rounded-2xl overflow-hidden shadow-2xl border-4 border-[#365314]/30"
+            >
+                <div id="map" class="w-full h-full z-0"></div>
+
+                <!-- Overlay Legend/Controls if needed -->
+                <div
+                    class="absolute bottom-4 left-4 z-[400] bg-white/90 backdrop-blur-md p-4 rounded-lg shadow-lg max-w-xs"
+                >
+                    <h3 class="font-bold text-[#365314] uppercase mb-2">
+                        Leyenda
+                    </h3>
+                    <ul class="space-y-1 text-sm text-stone-700">
+                        <li class="flex items-center gap-2">
+                            <span class="w-3 h-3 rounded-full bg-red-600"
+                            ></span> Zona T-Rex
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <span class="w-3 h-3 rounded-full bg-blue-600"
+                            ></span> Zona Acuática
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <span class="w-3 h-3 rounded-full bg-amber-500"
+                            ></span> Zona Aérea
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+</Layout>
+
+<!-- Leaflet JS -->
+<script
+    is:inline
+    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+    crossorigin=""></script>
+
+<script is:inline define:vars={{ attractions }}>
+    document.addEventListener("DOMContentLoaded", () => {
+        // Zaragoza coordinates
+        const zaragoza = [41.6488, -0.8891];
+
+        const map = L.map("map").setView(zaragoza, 13);
+
+        // Premium Dark Theme Tiles
+        L.tileLayer(
+            "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png",
+            {
+                attribution:
+                    '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+                subdomains: "abcd",
+                maxZoom: 19,
+            },
+        ).addTo(map);
+
+        // Custom Icon Definition
+        const dinoIcon = (color) =>
+            L.divIcon({
+                className: "custom-div-icon",
+                html: `<div style="background-color: ${color}; width: 24px; height: 24px; border-radius: 50%; border: 3px solid white; box-shadow: 0 0 10px rgba(0,0,0,0.5);"></div>`,
+                iconSize: [24, 24],
+                iconAnchor: [12, 12],
+                popupAnchor: [0, -12],
+            });
+
+        // Add Markers
+        attractions.forEach((attr) => {
+            let color = "#d97706"; // Default amber
+            if (attr.type === "safari") color = "#dc2626"; // Red
+            if (attr.type === "water") color = "#2563eb"; // Blue
+
+            const marker = L.marker([attr.lat, attr.lng], {
+                icon: dinoIcon(color),
+            }).addTo(map);
+
+            marker.bindPopup(`
+          <div style="text-align: center; min-width: 200px;">
+              <h3 style="font-family: 'Impact', sans-serif; font-size: 1.25rem; color: #365314; margin-bottom: 0.25rem; text-transform: uppercase;">${attr.name}</h3>
+              <p style="color: #57534e; font-style: italic;">${attr.description}</p>
+              <a href="#" style="display: inline-block; margin-top: 0.5rem; color: #d97706; font-weight: bold; text-decoration: none; font-size: 0.875rem;">Ver Entrada &rarr;</a>
+          </div>
+      `);
+        });
+    });
+</script>
+
+<style>
+    :global(.leaflet-popup-content-wrapper) {
+        background-color: #f5f5f4 !important;
+        border-radius: 0.5rem !important;
+        border: 2px solid #365314;
+        overflow: hidden;
+    }
+    :global(.leaflet-popup-tip) {
+        background-color: #365314 !important;
+    }
+
+    /* Custom marker pulse effect */
+    :global(.leaflet-marker-icon) {
+        transition: all 0.3s ease;
+    }
+    :global(.leaflet-marker-icon:hover) {
+        transform: scale(1.2) !important;
+    }
+</style>

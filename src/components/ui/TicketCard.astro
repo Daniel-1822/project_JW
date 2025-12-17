@@ -1,0 +1,274 @@
+---
+// src/components/ui/TicketCard.astro
+interface Props {
+    type: string;
+    price: number;
+    features: string[];
+    popular?: boolean;
+    stock: number;
+    color?: "purple" | "pink" | "blue";
+}
+
+const { type, price, features, popular = false, stock } = Astro.props;
+
+const isLowStock = stock < 50;
+---
+
+<article
+    class="ticket-card-inner group relative bg-white overflow-hidden border-2 border-[#365314]/30 hover:border-[#d97706] transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-[#d97706]/20 h-full flex flex-col"
+>
+    <!-- Distintivo -->
+    {
+        popular && (
+            <div class="absolute top-0 right-0 z-10 bg-[#d97706] text-white px-4 py-2 text-xs font-black uppercase tracking-wider rounded-bl-lg shadow-md border-b-2 border-l-2 border-[#92400e]">
+                ⭐ Más Popular
+            </div>
+        )
+    }
+
+    <!-- Contenido -->
+    <div
+        class="p-8 bg-[url('https://www.transparenttextures.com/patterns/aged-paper.png')] bg-bg-bone flex-grow flex flex-col h-full"
+    >
+        <!-- Cabecera -->
+        <div class="border-b-2 border-dashed border-[#365314]/20 pb-6 mb-6">
+            <h3
+                class="text-4xl font-black mb-2 text-[#1a2e05] uppercase italic tracking-wide group-hover:text-[#d97706] transition-colors"
+                style="font-family: 'Impact', sans-serif;"
+            >
+                {type}
+            </h3>
+
+            <div class="flex items-baseline gap-1">
+                <span class="text-5xl font-black text-[#1a2e05]">{price}€</span>
+                <span class="text-[#4d7c0f] font-bold text-sm uppercase"
+                    >/persona</span
+                >
+            </div>
+        </div>
+
+        <!-- Características y Stock -->
+        <div class="flex-grow">
+            <!-- Indicador de Stock -->
+            <div class="flex items-center gap-2 mb-6">
+                <span
+                    class="text-[#d97706] text-sm font-bold uppercase tracking-wide flex items-center gap-2"
+                >
+                    <svg
+                        class="w-4 h-4"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                    >
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+                        ></path>
+                    </svg>
+                    ¡Sólo quedan <span class="stock-value">{stock}</span>!
+                </span>
+            </div>
+
+            <ul class="space-y-4 mb-8">
+                {
+                    features.map((feature) => (
+                        <li class="flex items-start gap-3 text-[#1a2e05] font-bold text-sm uppercase tracking-wide">
+                            <svg
+                                class="w-5 h-5 text-[#4d7c0f] flex-shrink-0"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="3"
+                                    d="M5 13l4 4L19 7"
+                                />
+                            </svg>
+                            <span>{feature}</span>
+                        </li>
+                    ))
+                }
+            </ul>
+        </div>
+
+        {/* Selector de cantidad */}
+        <div class="mb-4">
+            {
+                stock > 0 ? (
+                    <div class="flex items-center gap-4 justify-center bg-[#365314]/5 py-2 rounded-lg border border-[#365314]/10">
+                        <span class="text-sm font-black text-[#1a2e05] uppercase tracking-wider">
+                            Cantidad:
+                        </span>
+                        <div class="flex items-center bg-white border-2 border-[#365314]/20 rounded shadow-sm">
+                            <button
+                                type="button"
+                                class="qty-btn decrease px-3 py-1 hover:bg-[#d97706]/10 text-[#1a2e05] font-black transition-colors disabled:opacity-30 disabled:cursor-not-allowed text-lg"
+                                disabled
+                            >
+                                -
+                            </button>
+                            <input
+                                type="number"
+                                min="1"
+                                max={stock}
+                                value="1"
+                                class="qty-input w-12 text-center border-x-2 border-[#365314]/10 p-1 font-black text-[#1a2e05] focus:outline-none appearance-none"
+                                readonly
+                            />
+                            <button
+                                type="button"
+                                class="qty-btn increase px-3 py-1 hover:bg-[#d97706]/10 text-[#1a2e05] font-black transition-colors disabled:opacity-30 disabled:cursor-not-allowed text-lg"
+                                disabled={stock <= 1}
+                            >
+                                +
+                            </button>
+                        </div>
+                    </div>
+                ) : (
+                    <div class="text-center py-2 text-stone-500 font-bold italic">
+                        No hay entradas disponibles por el momento
+                    </div>
+                )
+            }
+        </div>
+
+        <!-- Botón de acción (CTA) -->
+        <button
+            data-id={type}
+            data-title={type}
+            data-price={price}
+            data-stock={stock}
+            disabled={stock === 0}
+            class:list={[
+                "add-to-cart-ticket-btn w-full py-4 text-white font-black uppercase tracking-wider rounded shadow-lg border-none flex items-center justify-center gap-2 transition-all duration-300",
+                stock === 0
+                    ? "bg-stone-400 cursor-not-allowed opacity-75 grayscale"
+                    : "bg-[#1a2e05] hover:bg-[#d97706] cursor-pointer hover:shadow-[#d97706]/20 hover:-translate-y-0.5",
+            ]}
+        >
+            <span>{stock === 0 ? "Agotado" : "Añadir al Carrito"}</span>
+        </button>
+    </div>
+
+    <script>
+        import { addToCart } from "../../utils/cartStore";
+
+        const buttons = document.querySelectorAll(".add-to-cart-ticket-btn");
+
+        // Configurar selectores de cantidad
+        document.querySelectorAll(".ticket-card-inner").forEach((card) => {
+            const decreaseBtn = card.querySelector(".decrease");
+            const increaseBtn = card.querySelector(".increase");
+            const input = card.querySelector(".qty-input") as HTMLInputElement;
+
+            if (!input) return;
+
+            const max = parseInt(input.max);
+
+            decreaseBtn?.addEventListener("click", () => {
+                let val = parseInt(input.value);
+                if (val > 1) {
+                    val--;
+                    input.value = val.toString();
+                    increaseBtn?.removeAttribute("disabled");
+                }
+                if (val <= 1) decreaseBtn.setAttribute("disabled", "true");
+            });
+
+            increaseBtn?.addEventListener("click", () => {
+                let val = parseInt(input.value);
+                if (val < max) {
+                    val++;
+                    input.value = val.toString();
+                    decreaseBtn?.removeAttribute("disabled");
+                }
+                if (val >= max) increaseBtn.setAttribute("disabled", "true");
+            });
+        });
+
+        buttons.forEach((btn) => {
+            btn.addEventListener("click", (e) => {
+                const target = e.currentTarget as HTMLButtonElement;
+                const card = target.closest("article");
+                const qtyInput = card?.querySelector(
+                    ".qty-input",
+                ) as HTMLInputElement;
+                const quantity = qtyInput ? parseInt(qtyInput.value) : 1;
+
+                // Lógica de stock
+                let currentStock = parseInt(
+                    target.getAttribute("data-stock") || "0",
+                );
+
+                const id = target.dataset.id;
+                const title = target.dataset.title;
+                const price = Number(target.dataset.price);
+
+                addToCart({
+                    id,
+                    title,
+                    price,
+                    quantity,
+                    image: "",
+                });
+
+                // Actualizar stock local
+                currentStock -= quantity;
+                target.setAttribute("data-stock", currentStock.toString());
+
+                // Empezar a actualizar la interfaz para el stock
+                const stockDisplay = card?.querySelector(".stock-value");
+                if (stockDisplay)
+                    stockDisplay.textContent = currentStock.toString();
+
+                if (qtyInput) {
+                    qtyInput.max = currentStock.toString();
+                    // Si acabamos de comprar todo, deshabilitar inputs
+                    if (currentStock <= 0) {
+                        qtyInput.value = "0";
+                        qtyInput.setAttribute("disabled", "true");
+                        card?.querySelector(".decrease")?.setAttribute(
+                            "disabled",
+                            "true",
+                        );
+                        card?.querySelector(".increase")?.setAttribute(
+                            "disabled",
+                            "true",
+                        );
+                    } else if (parseInt(qtyInput.value) > currentStock) {
+                        qtyInput.value = currentStock.toString();
+                    }
+                }
+
+                // Feedback visual y cambio de estado
+                const originalHTML = "<span>Añadir al Carrito</span>"; // Sabemos que este es el contenido por defecto
+
+                target.innerHTML = `<span class="flex items-center gap-2">¡Añadido (${quantity})! <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg></span>`;
+                target.classList.remove("bg-[#1a2e05]", "hover:bg-[#d97706]");
+                target.classList.add("bg-green-600", "text-white");
+
+                setTimeout(() => {
+                    if (currentStock <= 0) {
+                        target.innerHTML = `<span>Agotado</span>`;
+                        target.disabled = true;
+                        target.classList.remove("bg-green-600", "text-white");
+                        target.classList.add(
+                            "bg-stone-400",
+                            "cursor-not-allowed",
+                            "opacity-75",
+                            "grayscale",
+                        );
+                    } else {
+                        target.innerHTML = originalHTML;
+                        target.classList.remove("bg-green-600", "text-white");
+                        target.classList.add("bg-[#1a2e05]");
+                    }
+                }, 1000);
+            });
+        });
+    </script>
+</article>

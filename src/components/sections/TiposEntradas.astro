@@ -1,0 +1,99 @@
+---
+// src/components/sections/TicketsSection.astro
+import TicketCard from "../ui/TicketCard.astro";
+
+const tickets = [
+    {
+        type: "General",
+        price: 200,
+        color: "blue" as const,
+        stock: 5,
+        features: ["Acceso a todas las atracciones"],
+    },
+    {
+        type: "Premium",
+        price: 500,
+        color: "pink" as const,
+        stock: 5,
+        features: [
+            "Todo lo de General +",
+            "Nado con Megalodon",
+            "Buffet Jurásico",
+        ],
+    },
+    {
+        type: "VIP",
+        price: 1000,
+        color: "pink" as const,
+        stock: 2,
+        features: ["Todo lo de Premium +", "Saltate las filas"],
+    },
+];
+---
+
+<section id="tickets" class="py-32 bg-bg-bone relative overflow-hidden">
+    <div class="container mx-auto px-4 relative z-10">
+        <!-- Cabecera de Sección -->
+        <div class="text-center mb-16 tickets-header">
+            <h2
+                class="text-5xl md:text-6xl font-black mb-4 text-[#365314] uppercase italic drop-shadow-sm"
+            >
+                Elige Tu Experiencia
+            </h2>
+            <p
+                class="text-stone-600 text-xl max-w-2xl mx-auto font-serif italic"
+            >
+                "Compra tu entrada (antes de que se agoten)"
+            </p>
+        </div>
+
+        <!-- Cuadrícula de Entradas -->
+        <div
+            class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto tickets-grid"
+        >
+            {
+                tickets.map((ticket, index) => (
+                    <div class="ticket-item" data-index={index}>
+                        <TicketCard {...ticket} />
+                    </div>
+                ))
+            }
+        </div>
+    </div>
+
+    <script>
+        import gsap from "gsap";
+        import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Animación del header
+        gsap.from(".tickets-header", {
+            scrollTrigger: {
+                trigger: ".tickets-header",
+                start: "top 80%",
+                end: "bottom 60%",
+                toggleActions: "play none none reverse",
+            },
+            y: 50,
+            opacity: 0,
+            duration: 1,
+            ease: "power3.out",
+        });
+
+        // Animación de las tarjetas de tickets
+        gsap.from(".ticket-item", {
+            scrollTrigger: {
+                trigger: ".tickets-grid",
+                start: "top 80%",
+                end: "bottom 60%",
+                toggleActions: "play none none reverse",
+            },
+            y: 100,
+            opacity: 0,
+            duration: 0.8,
+            stagger: 0.2,
+            ease: "power3.out",
+        });
+    </script>
+</section>

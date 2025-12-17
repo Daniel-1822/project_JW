@@ -1,0 +1,110 @@
+---
+import EventCard from "../ui/AtraccionCard.astro";
+
+const merch = [
+    {
+        title: "Merch Oficial",
+        price: "50€",
+        image: "",
+        badge: "Exclusivo",
+        stock: 999,
+        href: "/tienda",
+    },
+    {
+        title: "Happy Dino Meal",
+        price: "15€",
+        image: "",
+        badge: "",
+        stock: 999,
+        href: "/tienda",
+    },
+    {
+        title: "Cajas sorpresa",
+        price: "100€",
+        image: "",
+        badge: "",
+        stock: 999,
+        href: "/tienda",
+    },
+];
+---
+
+<section id="merch" class="py-32 relative overflow-hidden bg-bg-bone">
+    <div class="container mx-auto px-4 relative z-10">
+        <!-- Cabecera de Sección -->
+        <div class="text-center mb-16 section-header-merch">
+            <h2
+                class="text-5xl md:text-6xl font-black mb-4 text-green-950 uppercase italic drop-shadow-sm"
+            >
+                Mercancia Oficial
+            </h2>
+            <p
+                class="text-stone-600 text-xl max-w-2xl mx-auto font-serif italic"
+            >
+                "Compra un recuerdo (antes de que te coman)"
+            </p>
+        </div>
+
+        <!-- Cuadrícula de Mercancía -->
+        <div
+            class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 merch-grid"
+        >
+            {
+                merch.map((item, index) => (
+                    <div class="merch-item" data-index={index}>
+                        <EventCard {...item} />
+                    </div>
+                ))
+            }
+        </div>
+    </div>
+</section>
+
+<script>
+    import gsap from "gsap";
+    import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+    gsap.registerPlugin(ScrollTrigger);
+
+    // Animación del header de la sección
+    gsap.from(".section-header-merch", {
+        scrollTrigger: {
+            trigger: ".section-header-merch",
+            start: "top 80%",
+            end: "bottom 60%",
+            toggleActions: "play none none reverse",
+        },
+        y: 50,
+        opacity: 0,
+        duration: 1,
+        ease: "power3.out",
+    });
+
+    // Animación de las tarjetas con stagger
+    gsap.from(".merch-item", {
+        scrollTrigger: {
+            trigger: ".merch-grid",
+            start: "top 80%",
+            end: "bottom 60%",
+            toggleActions: "play none none reverse",
+        },
+        y: 100,
+        opacity: 0,
+        duration: 0.8,
+        stagger: 0.2,
+        ease: "power3.out",
+    });
+
+    // Animación del botón "Ver más"
+    gsap.from(".view-more-merch", {
+        scrollTrigger: {
+            trigger: ".view-more-merch",
+            start: "top 90%",
+            toggleActions: "play none none reverse",
+        },
+        scale: 0.8,
+        opacity: 0,
+        duration: 0.6,
+        ease: "back.out(1.7)",
+    });
+</script>
