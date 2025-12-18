@@ -4,12 +4,11 @@ interface Props {
     type: string;
     price: number;
     features: string[];
-    popular?: boolean;
     stock: number;
     color?: "purple" | "pink" | "blue";
 }
 
-const { type, price, features, popular = false, stock } = Astro.props;
+const { type, price, features, stock } = Astro.props;
 
 const isLowStock = stock < 50;
 ---
@@ -19,7 +18,7 @@ const isLowStock = stock < 50;
 >
     <!-- Distintivo -->
     {
-        popular && (
+        stock < 5 && (
             <div class="absolute top-0 right-0 z-10 bg-[#d97706] text-white px-4 py-2 text-xs font-black uppercase tracking-wider rounded-bl-lg shadow-md border-b-2 border-l-2 border-[#92400e]">
                 ⭐ Más Popular
             </div>
@@ -99,9 +98,9 @@ const isLowStock = stock < 50;
         <div class="mb-4">
             {
                 stock > 0 ? (
-                    <div class="flex items-center gap-4 justify-center bg-[#365314]/5 py-2 rounded-lg border border-[#365314]/10">
+                    <div class="flex items-center gap-4 justify-center py-2 rounded-lg">
                         <span class="text-sm font-black text-[#1a2e05] uppercase tracking-wider">
-                            Cantidad:
+                            Stock:
                         </span>
                         <div class="flex items-center bg-white border-2 border-[#365314]/20 rounded shadow-sm">
                             <button

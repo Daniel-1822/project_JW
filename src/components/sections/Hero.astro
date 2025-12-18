@@ -12,7 +12,7 @@
         <div class="absolute inset-0 bg-[#1a2e05]"></div>
         <!-- Podríamos usar una imagen real aquí si está disponible, por ahora usamos un gradiente/color de jungla oscura -->
         <img
-            src="https://images.unsplash.com/photo-1543946658-b6158ced6e87?q=80&w=2070&auto=format&fit=crop"
+            src="src/assets/hero.jpg"
             class="w-full h-full object-cover opacity-80"
             alt="Jungle Background"
         />
@@ -71,7 +71,7 @@
                 <div
                     class="flex items-center gap-2 bg-black/30 px-4 py-2 rounded border border-white/20 backdrop-blur-sm"
                 >
-                    <span>🏕️ Campamento Cretácico</span>
+                    <span>🏕️ Safari Camping</span>
                 </div>
             </div>
         </div>
@@ -84,7 +84,7 @@
             >
                 <a href="#tickets" class="btn-secondary"> Comprar Pases </a>
 
-                <a href="#attractions" class="btn-primary"> Ver Atracciones </a>
+                <a href="atracciones" class="btn-primary"> Ver Atracciones </a>
             </div>
         </div>
     </div>
@@ -95,19 +95,6 @@
     import { ScrollTrigger } from "gsap/ScrollTrigger";
 
     gsap.registerPlugin(ScrollTrigger);
-
-    // Crear estrellas de fondo
-    const starsContainer = document.getElementById("stars");
-    if (starsContainer) {
-        for (let i = 0; i < 100; i++) {
-            const star = document.createElement("div");
-            star.className = "absolute w-1 h-1 bg-white rounded-full";
-            star.style.left = `${Math.random() * 100}%`;
-            star.style.top = `${Math.random() * 100}%`;
-            star.style.opacity = `${Math.random() * 0.5 + 0.2}`;
-            starsContainer.appendChild(star);
-        }
-    }
 
     // Animación inicial del hero (fade in)
     const timeline = gsap.timeline({ defaults: { ease: "power3.out" } });

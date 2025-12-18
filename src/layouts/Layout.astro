@@ -29,7 +29,9 @@ const {
 			class="fixed top-0 w-full z-50 bg-green-700 backdrop-blur-md border-b-4 border-amber-600 shadow-lg"
 		>
 			<nav class="container mx-auto px-4 py-4">
+				<!-- Barra superior -->
 				<div class="flex items-center justify-between">
+					<!-- Logo -->
 					<a
 						href="/"
 						class="text-3xl font-black tracking-widest text-white uppercase italic"
@@ -38,57 +40,54 @@ const {
 						DinoPark
 					</a>
 
+					<!-- Botón hamburguesa (solo móvil) -->
+					<button
+						id="menu-btn"
+						class="md:hidden text-white text-3xl focus:outline-none"
+						aria-label="Abrir menú"
+					>
+						☰
+					</button>
+
+					<!-- Menú desktop -->
 					<ul
 						class="hidden md:flex items-center gap-8 text-white/90 font-bold tracking-wide uppercase text-sm"
 					>
 						<li>
-							<a
-								href="/atracciones"
-								class="hover:text-amber-500 transition-colors"
+							<a href="/atracciones" class="hover:text-amber-500"
 								>Atracciones</a
 							>
 						</li>
 						<li>
-							<a
-								href="/tienda"
-								class="hover:text-amber-500 transition-colors"
+							<a href="/tienda" class="hover:text-amber-500"
 								>Tienda</a
 							>
 						</li>
 						<li>
-							<a
-								href="/dashboard"
-								class="hover:text-amber-500 transition-colors"
+							<a href="/dashboard" class="hover:text-amber-500"
 								>Dashboard</a
 							>
 						</li>
 						<li>
-							<a
-								href="/comunidad"
-								class="hover:text-amber-500 transition-colors"
+							<a href="/comunidad" class="hover:text-amber-500"
 								>Comunidad</a
 							>
 						</li>
 						<li>
-							<a
-								href="/mapa"
-								class="hover:text-amber-500 transition-colors"
-								>Mapa</a
+							<a href="/mapa" class="hover:text-amber-500">Mapa</a
 							>
 						</li>
 						<li>
-							<a
-								href="/contacto"
-								class="hover:text-amber-500 transition-colors"
+							<a href="/contacto" class="hover:text-amber-500"
 								>Contacto</a
 							>
 						</li>
-						<!-- Icono del Carrito -->
+
+						<!-- Carrito -->
 						<li>
 							<a
 								href="/carrito"
-								class="relative group hover:text-amber-500 transition-colors flex items-center"
-								aria-label="Carrito"
+								class="relative flex items-center hover:text-amber-500"
 							>
 								<svg
 									xmlns="http://www.w3.org/2000/svg"
@@ -101,7 +100,10 @@ const {
 										stroke-linecap="round"
 										stroke-linejoin="round"
 										stroke-width="2"
-										d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
+										d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293
+                c-.63.63-.184 1.707.707 1.707H17m0
+                0a2 2 0 100 4 2 2 0 000-4zm-8
+                2a2 2 0 11-4 0 2 2 0 014 0z"
 									></path>
 								</svg>
 								<span
@@ -113,6 +115,20 @@ const {
 						</li>
 					</ul>
 				</div>
+
+				<!-- Menú móvil -->
+				<ul
+					id="mobile-menu"
+					class="hidden md:hidden mt-6 flex flex-col gap-4 bg-green-800 p-6 rounded-lg text-white font-bold uppercase text-sm"
+				>
+					<li><a href="/atracciones">Atracciones</a></li>
+					<li><a href="/tienda">Tienda</a></li>
+					<li><a href="/dashboard">Dashboard</a></li>
+					<li><a href="/comunidad">Comunidad</a></li>
+					<li><a href="/mapa">Mapa</a></li>
+					<li><a href="/contacto">Contacto</a></li>
+					<li><a href="/carrito">Carrito</a></li>
+				</ul>
 			</nav>
 		</header>
 
@@ -141,6 +157,14 @@ const {
 
 			// Soporte para transiciones de vista de Astro (si está habilitado, pero es buena práctica tenerlo)
 			document.addEventListener("astro:page-load", updateCount);
+		</script>
+		<script>
+			const btn = document.getElementById("menu-btn");
+			const menu = document.getElementById("mobile-menu");
+
+			btn?.addEventListener("click", () => {
+				menu?.classList.toggle("hidden");
+			});
 		</script>
 
 		<!-- Contenido Principal -->
@@ -177,17 +201,23 @@ const {
 							<a
 								href="#"
 								class="w-10 h-10 bg-white/10 rounded-sm flex items-center justify-center hover:bg-amber-600 transition-colors text-white"
-								>𝕏</a
+								><img src="src/assets/x.png" alt="X" /></a
 							>
 							<a
 								href="#"
 								class="w-10 h-10 bg-white/10 rounded-sm flex items-center justify-center hover:bg-amber-600 transition-colors text-white"
-								>IG</a
+								><img
+									src="src/assets/instagram.png"
+									alt="Instagram"
+								/></a
 							>
 							<a
 								href="#"
 								class="w-10 h-10 bg-white/10 rounded-sm flex items-center justify-center hover:bg-amber-600 transition-colors text-white"
-								>FB</a
+								><img
+									src="src/assets/facebook.png"
+									alt="Facebook"
+								/></a
 							>
 						</div>
 					</div>
